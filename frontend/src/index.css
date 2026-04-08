@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* React Calendar Modernization Overrides */
+.custom-calendar-container .react-calendar {
+  border: none;
+  font-family: inherit;
+  background: transparent;
+  width: 100%;
+}
+
+.custom-calendar-container .react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+.custom-calendar-container .react-calendar__navigation button:hover {
+  background-color: #f1f5f9;
+}
+
+.custom-calendar-container .react-calendar__tile {
+  padding: 14px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.custom-calendar-container .react-calendar__tile:enabled:hover,
+.custom-calendar-container .react-calendar__tile:enabled:focus {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.custom-calendar-container .react-calendar__tile--active {
+  background: #4f46e5 !important;
+  color: white !important;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* Custom class for admin side blocking */
+.custom-blocked-date {
+  background-color: #ffe4e6 !important;
+  color: #e11d48 !important;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+/* Dark Mode Overrides */
+html.dark body { background-color: #0f172a; color: #f8fafc; }
+html.dark .bg-white { background-color: #1e293b; }
+html.dark .bg-slate-50 { background-color: #0f172a; }
+html.dark .border-slate-100 { border-color: #1e293b; }
+html.dark .border-slate-200 { border-color: #334155; }
+html.dark .border-slate-300 { border-color: #475569; }
+html.dark .text-slate-900 { color: #f8fafc; }
+html.dark .text-slate-800 { color: #f1f5f9; }
+html.dark .text-slate-700 { color: #e2e8f0; }
+html.dark .text-slate-600, html.dark .text-slate-500 { color: #94a3b8; }
+html.dark .bg-indigo-50 { background-color: #1e1b4b; }
+html.dark .bg-amber-50 { background-color: #451a03; }
+html.dark .bg-emerald-50 { background-color: #022c22; }
+html.dark .bg-rose-50 { background-color: #4c0519; }
+html.dark input, html.dark select { background-color: #0f172a !important; border-color: #334155 !important; color: #f8fafc !important; }
+html.dark header { background-color: #1e293b !important; border-color: #334155 !important; }
+html.dark .react-calendar { color: #f8fafc; }
+html.dark .react-calendar__navigation button:hover { background-color: #334155 !important; }
+html.dark .react-calendar__tile:enabled:hover, html.dark .react-calendar__tile:enabled:focus { background-color: #312e81 !important; }
+html.dark .react-calendar__tile--active { background-color: #4f46e5 !important; }
+html.dark aside nav button:hover { background-color: #334155 !important; }
+html.dark .custom-blocked-date { background-color: #881337 !important; color: #fda4af !important; }
