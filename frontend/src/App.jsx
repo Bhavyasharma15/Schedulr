@@ -13,17 +13,30 @@ const AuthGuard = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Run only once on mount to handle background session events
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const userStr = localStorage.getItem('user');
+      if (!session && userStr) {
+         // Only log out if we are absolutely sure there's no session but we have local data
+         // to prevent race conditions during initial auth
+         localStorage.removeItem('user');
+         navigate('/login', { replace: true });
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  // Run on route changes to protect routes implicitly
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       const userStr = localStorage.getItem('user');
+      const isAuthRoute = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register';
 
-      // If they have a valid session and user data
       if (session && userStr) {
         const user = JSON.parse(userStr);
-        const isAuthRoute = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register';
-        
-        // Redirect them to their dashboard automatically
         if (isAuthRoute) {
           if (user.role === 'admin' || user.email === 'admin@schedulr.com') {
             navigate('/admin', { replace: true });
@@ -32,24 +45,17 @@ const AuthGuard = ({ children }) => {
           }
         }
       } else if (!session && userStr) {
-        // Purge expired local storage
-        localStorage.removeItem('user');
+        // Wait briefly to see if Supabase is still initializing before purging
+        setTimeout(async () => {
+           const { data: { session: delayedSession } } = await supabase.auth.getSession();
+           if (!delayedSession) {
+             localStorage.removeItem('user');
+           }
+        }, 1000);
       }
     };
     
     checkAuth();
-
-    // Listen for logouts or session expiry in the background
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        localStorage.removeItem('user');
-        if (location.pathname === '/admin' || location.pathname === '/client') {
-          navigate('/login', { replace: true });
-        }
-      }
-    });
-
-    return () => subscription.unsubscribe();
   }, [location.pathname, navigate]);
 
   return children;
