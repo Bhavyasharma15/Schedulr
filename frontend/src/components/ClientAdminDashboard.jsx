@@ -19,7 +19,8 @@ import {
   User,
   Camera,
   CreditCard,
-  Globe
+  Globe,
+  LayoutDashboard
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CalendarComponent from 'react-calendar';
@@ -288,7 +289,7 @@ export const ClientAdminDashboard = () => {
             onClick={() => setActiveTab('dashboard')}
             className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${activeTab === 'dashboard' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-slate-800 hover:text-white'}`}
           >
-            <LayoutDashboardIcon className="h-5 w-5" />
+            <LayoutDashboard className="h-5 w-5" />
             Dashboard
           </button>
           <button 
