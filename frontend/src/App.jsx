@@ -15,11 +15,9 @@ const AuthGuard = ({ children }) => {
 
   // Run only once on mount to handle background session events
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      const userStr = localStorage.getItem('user');
-      if (!session && userStr) {
-         // Only log out if we are absolutely sure there's no session but we have local data
-         // to prevent race conditions during initial auth
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      // Only react to explicit sign out events, not initial 'null' states during hydration
+      if (event === 'SIGNED_OUT') {
          localStorage.removeItem('user');
          navigate('/login', { replace: true });
       }
