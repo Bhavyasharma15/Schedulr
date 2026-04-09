@@ -334,18 +334,7 @@ export const ClientAdminDashboard = () => {
       <main className="flex-1 ml-64 flex flex-col min-w-0">
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-10">
           <div className="flex items-center gap-4 flex-1">
-            <div className="relative w-96 hidden md:block">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-4 w-4 text-slate-400" />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Search meetings, customers..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500" 
-              />
-            </div>
+            {/* Search bar moved to Schedule Overview */}
           </div>
           <div className="flex items-center gap-4 relative">
             <button 
@@ -552,10 +541,22 @@ export const ClientAdminDashboard = () => {
             {/* Schedule Overview Tab */}
             {activeTab === 'schedule' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
                     <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Schedule Overview</h1>
                     <p className="mt-1 text-sm text-slate-500">A detailed list of your confirmed meetings.</p>
+                  </div>
+                  <div className="relative w-full sm:w-80">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Search className="h-4 w-4 text-slate-400" />
+                    </div>
+                    <input 
+                      type="text" 
+                      placeholder="Search meetings, customers..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="block w-full pl-10 pr-3 py-2 border border-slate-200 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                    />
                   </div>
                 </div>
 
